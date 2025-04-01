@@ -1,10 +1,10 @@
 // rrd imports
 import { useLoaderData } from "react-router-dom";
 
-//helper functions
+//  helper functions
 import { fetchData } from "../helpers";
 
-//loader
+// loader
 // eslint-disable-next-line react-refresh/only-export-components
 export function dashboardLoader() {
   const userName = fetchData("userName");
@@ -21,5 +21,4 @@ const Dashboard = () => {
     </div>
   );
 };
-
 export default Dashboard;
