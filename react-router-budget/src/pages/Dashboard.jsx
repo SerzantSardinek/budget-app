@@ -3,7 +3,7 @@
 import { useLoaderData } from "react-router-dom";
 
 //  helper functions
-import { createBudget, fetchData, waait } from "../helpers";
+import { createBudget, createExpense, fetchData, waait } from "../helpers";
 
 //components
 import { toast } from "react-toastify";
@@ -44,6 +44,19 @@ export async function dashboardAction({ request }) {
       // eslint-disable-next-line no-unused-vars
     } catch (e) {
       throw new Error("There was a problem creating your budget.");
+    }
+  }
+  if (_action === "createExpense") {
+    try {
+      createExpense({
+        name: values.newExpense,
+        amount: values.newExpenseAmount,
+        budgetId: values.newExpenseBudget,
+      });
+      return toast.success(`Expense ${values.newExpense} created!`);
+      // eslint-disable-next-line no-unused-vars
+    } catch (e) {
+      throw new Error("There was a problem creating your expense.");
     }
   }
 }
