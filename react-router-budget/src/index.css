@@ -581,7 +581,7 @@ thead > tr:nth-child(odd) {
 td,
 th {
   text-align: center;
-  padding: var(--space-xs);
+  padding: var(--space-xs) 68px;
 }
 
 table .btn {
