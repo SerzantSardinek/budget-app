@@ -41,6 +41,7 @@ svg {
   --space-md: 24px;
   --space-lg: 32px;
   --space-xl: 40px;
+  --space-xxl: 68px;
   --content-sm: 40ch;
   --content: 60ch;
   --round-sm: 4px;
@@ -581,7 +582,7 @@ thead > tr:nth-child(odd) {
 td,
 th {
   text-align: center;
-  padding: var(--space-xs) 68px;
+  padding: var(--space-xs) var(--space-xxl);
 }
 
 table .btn {
