@@ -1,17 +1,26 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable react-refresh/only-export-components */
 // rrd imports
 import { Link, useLoaderData } from "react-router-dom";
 
-//  helper functions
-import { createBudget, createExpense, fetchData, waait } from "../helpers";
-
-//components
+// library imports
 import { toast } from "react-toastify";
+
+// components
 import AddBudgetForm from "../components/AddBudgetForm";
 import AddExpenseForm from "../components/AddExpenseForm";
 import BudgetItem from "../components/BudgetItem";
 import Intro from "../components/Intro";
 import Table from "../components/Table";
+
+//  helper functions
+import {
+  createBudget,
+  createExpense,
+  deleteItem,
+  fetchData,
+  waait,
+} from "../helpers";
 
 // loader
 export function dashboardLoader() {
@@ -21,17 +30,18 @@ export function dashboardLoader() {
   return { userName, budgets, expenses };
 }
 
-//action
+// action
 export async function dashboardAction({ request }) {
   await waait();
 
   const data = await request.formData();
   const { _action, ...values } = Object.fromEntries(data);
+
+  // new user submission
   if (_action === "newUser") {
     try {
       localStorage.setItem("userName", JSON.stringify(values.userName));
       return toast.success(`Welcome, ${values.userName}`);
-      // eslint-disable-next-line no-unused-vars
     } catch (e) {
       throw new Error("There was a problem creating your account.");
     }
@@ -44,11 +54,11 @@ export async function dashboardAction({ request }) {
         amount: values.newBudgetAmount,
       });
       return toast.success("Budget created!");
-      // eslint-disable-next-line no-unused-vars
     } catch (e) {
       throw new Error("There was a problem creating your budget.");
     }
   }
+
   if (_action === "createExpense") {
     try {
       createExpense({
@@ -57,9 +67,20 @@ export async function dashboardAction({ request }) {
         budgetId: values.newExpenseBudget,
       });
       return toast.success(`Expense ${values.newExpense} created!`);
-      // eslint-disable-next-line no-unused-vars
     } catch (e) {
       throw new Error("There was a problem creating your expense.");
+    }
+  }
+
+  if (_action === "deleteExpense") {
+    try {
+      deleteItem({
+        key: "expenses",
+        id: values.expenseId,
+      });
+      return toast.success("Expense deleted!");
+    } catch (e) {
+      throw new Error("There was a problem deleting your expense.");
     }
   }
 }
